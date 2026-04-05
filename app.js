@@ -14,7 +14,7 @@ function App() {
       ],
     },
   ]);
-
+    //Function to delete a board
   function deleteBoard(boardId) {
     setBoards((prevBoards) =>
       prevBoards.filter((board) => board.id !== boardId),
