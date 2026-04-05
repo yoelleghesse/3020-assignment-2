@@ -26,6 +26,11 @@
 
     <script type="text/babel">
       function App() {
+        const [tasks,setTask] = useState([
+        {id:1, title: "placeholder1", status: "To Do"},
+        {id:2, title: "placeholder2", status: "In Progress"},
+        {id:3, title: "placeholder3", status: "Done"}
+       ]);    
         return <h1>Hello World</h1>;
       }
 
