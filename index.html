@@ -25,6 +25,18 @@
   <body>
     <div id="root"></div>
 
-    <script type="text/babel" src="app.js"></script>
+    <script type="text/babel">
+      function App() {
+        const [tasks,setTask] = useState([
+        {id:1, title: "placeholder1", status: "To Do"},
+        {id:2, title: "placeholder2", status: "In Progress"},
+        {id:3, title: "placeholder3", status: "Done"}
+       ]);    
+        return <h1>Hello World</h1>;
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
   </body>
 </html>
