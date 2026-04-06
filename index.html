@@ -3,40 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Kanban</title>
     <link rel="stylesheet" href="styles.css" />
-
-    <!-- React -->
     <script
       crossorigin
       src="https://unpkg.com/react@18/umd/react.development.js"
     ></script>
-
-    <!-- ReactDOM -->
     <script
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
     ></script>
-
-    <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
-
   <body>
     <div id="root"></div>
-
-    <script type="text/babel">
-      function App() {
-        const [tasks,setTask] = useState([
-        {id:1, title: "placeholder1", status: "To Do"},
-        {id:2, title: "placeholder2", status: "In Progress"},
-        {id:3, title: "placeholder3", status: "Done"}
-       ]);    
-        return <h1>Hello World</h1>;
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<App />);
-    </script>
+    <script type="text/babel" src="app.js"></script>
   </body>
 </html>
