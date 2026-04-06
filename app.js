@@ -1,29 +1,28 @@
 function App() {
-  const [boards, setBoards] = React.useState([
-    {
-      id: 1,
-      title: "Main Board",
-      tasks: [
-        {
-          id: 1,
-          title: "Task 1",
-          description: "Our Main Board",
-          createdAt: "date",
-          dueDate: "date",
-          status: "To Do",
-        },
-      ],
-    },
-  ]);
+  const [boards, setBoards] = React.useState(() => {
+    const saved = localStorage.getItem("boards");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 1,
+            title: "Main Board",
+            tasks: [],
+          },
+        ];
+  });
 
-  // Function to delete a board
+  // Save to localStorage whenever boards change
+  React.useEffect(() => {
+    localStorage.setItem("boards", JSON.stringify(boards));
+  }, [boards]);
+
   function deleteBoard(boardId) {
     setBoards((prevBoards) =>
       prevBoards.filter((board) => board.id !== boardId),
     );
   }
 
-  // Function to add a new board
   function addBoard(title) {
     setBoards((prevBoards) => [
       ...prevBoards,
@@ -36,7 +35,6 @@ function App() {
       <h1>Kanban Board Demo</h1>
       <button onClick={() => addBoard("New Board")}>Add Board</button>
 
-      {/* This container wraps all the boards and displays them in a row (horizontally) with a gap between each board. */}
       <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         {boards.map((board) => (
           <Board
@@ -55,12 +53,16 @@ function App() {
 function Board({ board, setBoards, deleteBoard }) {
   const columns = ["To Do", "In Progress", "Done"];
 
-  // Add a new task
   function addTask() {
+    const title = prompt("Enter task title:");
+    if (!title) return;
+
+    const description = prompt("Enter short description:");
+
     const newTask = {
       id: Date.now(),
-      title: `Task ${board.tasks.length + 1}`,
-      description: "",
+      title: title,
+      description: description || "",
       createdAt: new Date().toISOString(),
       dueDate: "",
       status: "To Do",
@@ -73,7 +75,6 @@ function Board({ board, setBoards, deleteBoard }) {
     );
   }
 
-  // Delete a task
   function deleteTask(taskId) {
     setBoards((prevBoards) =>
       prevBoards.map((b) =>
@@ -111,7 +112,8 @@ function Board({ board, setBoards, deleteBoard }) {
         <h4>All Tasks:</h4>
         {board.tasks.map((task) => (
           <div key={task.id} style={{ margin: "2px 0" }}>
-            {task.title} — {task.status}
+            <strong>{task.title}</strong> — {task.status}
+            <br />
             <button
               onClick={() => deleteTask(task.id)}
               style={{ marginLeft: "5px" }}
@@ -155,9 +157,13 @@ function Board({ board, setBoards, deleteBoard }) {
                     border: "1px solid gray",
                     margin: "5px",
                     padding: "5px",
+                    backgroundColor: "#f9f9f9",
                   }}
                 >
-                  {task.title}
+                  <strong>{task.title}</strong>
+                  <div style={{ fontSize: "12px", marginTop: "4px" }}>
+                    {task.description}
+                  </div>
                 </div>
               ))}
             </div>
